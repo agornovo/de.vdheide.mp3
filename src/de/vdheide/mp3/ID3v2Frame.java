@@ -178,6 +178,11 @@ public class ID3v2Frame {
 			group = 0;
 		}
 
+		// Check for too long files. Avoids OoM errors
+		if ((length < 0) || (4194304 < length)) {
+			throw new IOException("Invalid frame size: " + length);
+		}
+
 		// // read content
 		content = new byte[length];
 		in.read(content);
@@ -192,6 +197,8 @@ public class ID3v2Frame {
 	}
 
 	/** ******** Public contants ********* */
+
+	public static final int MAX_FRAME_SIZE = 4194304;
 
 	/**
 	 * No compression present or requested

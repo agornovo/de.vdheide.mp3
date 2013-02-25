@@ -26,9 +26,21 @@ package de.vdheide.mp3;
  * Raised when a file does not contain a valid ID3v2 tag.
  */
 public class ID3v2IllegalVersionException extends ID3v2Exception {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	public ID3v2IllegalVersionException() {
+		super();
+	}
+
+	public ID3v2IllegalVersionException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ID3v2IllegalVersionException(String message) {
+		super(message);
+	}
+
+	public ID3v2IllegalVersionException(Throwable cause) {
+		super(cause);
+	}
 }

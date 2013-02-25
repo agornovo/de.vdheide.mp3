@@ -26,9 +26,21 @@ package de.vdheide.mp3;
  * Base class for all exceptions concerning the ID3v2 tag.
  */
 public class ID3v2Exception extends Exception {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+
+	public ID3v2Exception() {
+		super();
+	}
+
+	public ID3v2Exception(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public ID3v2Exception(String message) {
+		super(message);
+	}
+
+	public ID3v2Exception(Throwable cause) {
+		super(cause);
+	}
 }

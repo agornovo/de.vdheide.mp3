@@ -505,8 +505,17 @@ public class MP3Properties {
 		// This does not work, at least not for small bitrates
 		// I have to think about it TODO
 		// Instead, go for the easy solution
-		return (long) Math.floor((file.length() - id3v2_tagsize) / bitrate
-				* 0.008);
+		// Jens's code:
+//		return (long) Math.floor((file.length() - id3v2_tagsize) / bitrate
+//				* 0.008);
+
+		// to fix crasher when bitrate is bad: 
+		if (this.bitrate >= 0) {
+			// if the bitrate is not set, don't bother trying
+			return 0L;
+		}
+		long dataLength = this.file.length() - id3v2_tagsize;
+		return 125L * dataLength / this.bitrate;
 	}
 
 	/**

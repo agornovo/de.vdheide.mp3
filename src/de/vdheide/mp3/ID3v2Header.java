@@ -102,9 +102,14 @@ public class ID3v2Header {
 		// check version
 		version = head[3];
 		revision = head[4];
-		if ((version & 0xff) > (ID3v2.VERSION & 0xff)
-				|| (version == ID3v2.VERSION && (revision & 0xff) > (ID3v2.REVISION & 0xff))) {
-			throw new ID3v2IllegalVersionException();
+
+		int majorVersion = this.version & 0xFF;
+		int minorVersion = this.revision & 0xFF;
+		if ((majorVersion > (ID3v2.VERSION & 0xff)) || 
+			(  (majorVersion == (ID3v2.VERSION & 0xff)) 
+			&& (minorVersion > (ID3v2.REVISION & 0xff)))) {
+			throw new ID3v2IllegalVersionException(
+					majorVersion + "." + minorVersion);
 		}
 
 		// read & parse flags

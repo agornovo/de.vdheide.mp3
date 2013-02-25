@@ -1,7 +1,9 @@
 de.vdheide.mp3
 ==============
 
-Fork of Jens Vonderheide's LGPL MP3 tag reader library
+Fork of Jens Vonderheide's LGPL MP3 tag reader library. 
+Notably, includes a guard against OoM errors from some 
+badly formatted MP3s.
 
 
 ### Original Text::
