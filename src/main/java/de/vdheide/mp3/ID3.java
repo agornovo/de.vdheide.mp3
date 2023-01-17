@@ -23,8 +23,14 @@
 package de.vdheide.mp3;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
+
+import lombok.Setter;
 
 /**
  * Class to read and modify ID3 tags on MP3 files.
@@ -49,7 +55,8 @@ import java.io.RandomAccessFile;
 public class ID3 {
 
 	// encoding to use when converting from Unicode (String) to bytes
-	private final String encoding = "Cp437";
+    @Setter
+	private String encoding = "Cp437";
 
 	/**
 	 * Create a new ID3 tag which is based on mp3_file
@@ -136,7 +143,7 @@ public class ID3 {
 				throw new NoID3TagException();
 			}
 		}
-		return genre.byteValue();
+		return Byte.toUnsignedInt(genre.byteValue());
 	}
 
 	/**
@@ -331,6 +338,52 @@ public class ID3 {
 
 		in.close();
 	}
+	
+	   public void removeTag() throws IOException {
+	        // get access to file
+	        if (checkForTag()) {
+	            // tag exists, we need to truncate the file
+	            File temp = new File(mp3_file.getParentFile(), ".id3.tmp");
+	            OutputStream out = null;
+	            InputStream in = null;
+	            long size = mp3_file.length();
+	            try {
+	                in = new FileInputStream(mp3_file);
+	                out = new FileOutputStream(temp);
+	                byte buf[] = new byte[8192];
+	                int c;
+	                // size is the bytes remained to be read
+	                while ((c = in.read(buf)) > 0 && size > 128) {  // truncate the last 128 bytes 
+	                    if (c+128 > size) {
+	                        c = (int)size - 128;
+	                    }
+	                    out.write(buf, 0, c);
+	                    size -= c;
+	                }
+	                in.close();
+	                if (!mp3_file.delete()) {
+	                    System.err.println("Cannot delete mp3 file: "+mp3_file);
+	                }
+	                out.close();
+	                if (!temp.renameTo(mp3_file)) {
+	                    System.err.println("Cannot rename "+temp+" to "+mp3_file);
+	                    temp = null;        // prevent it from being deleted
+	                }
+	            } finally {
+	                try {
+	                    if (in != null) in.close();
+	                } catch (Exception e) {
+	                }
+	                try {
+	                    if (out != null) out.close();
+	                } catch (Exception e) {
+	                }
+	                if (temp != null)
+	                    temp.delete();
+	            }
+	        }
+	    }
+
 
 	private File mp3_file = null; // file to access
 
