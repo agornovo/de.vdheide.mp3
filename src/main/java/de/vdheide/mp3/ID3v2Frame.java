@@ -392,6 +392,13 @@ public class ID3v2Frame {
 	public byte[] getContent() {
 		return content;
 	}
+	
+    public void setContent(byte[] content) {
+        if (compression == true)
+            throw new UnsupportedOperationException(
+                    "Setting content for compressed ID3v2 tag not implemented");
+        this.content = content;
+    }
 
 	/**
 	 * Returns an array of bytes representing this frame

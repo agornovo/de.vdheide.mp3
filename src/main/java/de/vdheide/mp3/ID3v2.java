@@ -215,6 +215,20 @@ public class ID3v2 {
 		}
 	}
 
+	public void touch () {
+		is_changed = true;
+	}
+
+	/*
+	 * Clear all information in the tag.
+	 */
+	public void clear() {
+		header = null;
+		frames = null;
+		is_changed = true;
+		extended_header = null;
+	}
+
 	/**
 	 * @return True if padding is used
 	 */
@@ -793,4 +807,19 @@ public class ID3v2 {
 
 		return out.toByteArray();
 	}
+	
+	public int getVersion() {
+		if (header != null) {
+			return header.version;
+		} else
+			return VERSION;
+	}
+	
+	public int getRevision() {
+		if (header != null) {
+			return header.revision;
+		} else 
+			return REVISION;
+	}
+	
 }
