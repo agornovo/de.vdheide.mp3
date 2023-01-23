@@ -1,38 +1,34 @@
-// File.java
-//
-//$Id$
-//
-//de.vdheide.mp3: Access MP3 properties, ID3 and ID3v2 tags
+//de.vdheide.utils: A collection of helper classes and methods.
 //Copyright (C) 1999-2004 Jens Vonderheide <jens@vdheide.de>
-//
-//This library is free software; you can redistribute it and/or
-//modify it under the terms of the GNU Library General Public
-//License as published by the Free Software Foundation; either
-//version 2 of the License, or (at your option) any later version.
-//
-//This library is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//Library General Public License for more details.
-//
-//You should have received a copy of the GNU Library General Public
-//License along with this library; if not, write to the
-//Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-//Boston, MA  02111-1307, USA.
+
+/*
+ * This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 package de.vdheide.utils;
 
 /**
  * Various methods for file manipulation and access.
  * 
- * @author Jens Vonderheide <jens@vdheide.de>
+ * @author Jens Vonderheide {@literal<jens@vdheide.de>}
  */
 public class File {
     private File() {
     }
 
 	/**
-	 * Copy from <tt>source</tt> to <tt>destination</tt>
+	 * Copy from <code>source</code> to <code>destination</code>
 	 * 
 	 * @param source Source file
 	 * @param dest Destination file (no directory!)

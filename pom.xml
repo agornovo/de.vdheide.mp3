@@ -5,16 +5,17 @@
     <version>0.5.0-SNAPSHOT</version>
     <name>MP3 tagging library</name>
     <description>Jens Vonderheide's MP3 tag reader/writer library</description>
+    <url>https://github.com/agornovo/de.vdheide.mp3</url>
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+        </license>
+    </licenses>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-    <scm>
-        <connection>scm:git:${project.scm.url}</connection>
-        <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <url>https://github.com/agornovo/de.vdheide.mp3.git</url>
-        <tag>HEAD</tag>
-    </scm>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -38,6 +39,76 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <scm>
+        <connection>scm:git:https://github.com/agornovo/mp3-tagging.git</connection>
+        <developerConnection>scm:git:https://github.com/agornovo/mp3-tagging.git</developerConnection>
+        <url>https://github.com/agornovo/mp3-tagging/tree/main</url>
+        <tag>HEAD</tag>
+    </scm>
+    <developers>
+        <developer>
+            <name>Jens Vonderheide</name>
+            <email>jens@vdheide.de</email>
+            <organization>Jens Vonderheide</organization>
+            <organizationUrl>https://vdheide.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>David Mihalcik</name>
+            <email>krakatoa@gmail.com</email>
+            <organization>David Mihalcik</organization>
+            <organizationUrl>https://github.com/dmihalcik</organizationUrl>
+        </developer>
+        <developer>
+            <name>Arkadiy Gornovoy</name>
+            <email>gornovoy@yahoo.com</email>
+            <organization>Arkadiy Gornovoy</organization>
+            <organizationUrl>https://github.com/agornovo</organizationUrl>
+        </developer>
+    </developers>
     <distributionManagement>
         <repository>
             <id>github</id>
