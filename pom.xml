@@ -84,8 +84,8 @@
         </plugins>
     </build>
     <scm>
-        <connection>scm:git:https://github.com/agornovo/mp3-tagging.git</connection>
-        <developerConnection>scm:git:https://github.com/agornovo/mp3-tagging.git</developerConnection>
+        <connection>scm:git:git@github.com:agornovo/mp3-tagging.git</connection>
+        <developerConnection>scm:git:git@github.com:agornovo/mp3-tagging.git</developerConnection>
         <url>https://github.com/agornovo/mp3-tagging/tree/main</url>
         <tag>HEAD</tag>
     </scm>
