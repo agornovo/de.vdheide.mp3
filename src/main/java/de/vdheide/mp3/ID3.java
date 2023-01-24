@@ -1,30 +1,31 @@
-// ID3.java
-//
-//$Id$
-//
 //de.vdheide.mp3: Access MP3 properties, ID3 and ID3v2 tags
 //Copyright (C) 1999-2004 Jens Vonderheide <jens@vdheide.de>
-//
-//This library is free software; you can redistribute it and/or
-//modify it under the terms of the GNU Library General Public
-//License as published by the Free Software Foundation; either
-//version 2 of the License, or (at your option) any later version.
-//
-//This library is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//Library General Public License for more details.
-//
-//You should have received a copy of the GNU Library General Public
-//License along with this library; if not, write to the
-//Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-//Boston, MA  02111-1307, USA.
 
+/*
+ * This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package de.vdheide.mp3;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.RandomAccessFile;
+
+import lombok.Setter;
 
 /**
  * Class to read and modify ID3 tags on MP3 files.
@@ -49,7 +50,8 @@ import java.io.RandomAccessFile;
 public class ID3 {
 
 	// encoding to use when converting from Unicode (String) to bytes
-	private final String encoding = "Cp437";
+    @Setter
+	private String encoding = "Cp437";
 
 	/**
 	 * Create a new ID3 tag which is based on mp3_file
@@ -136,7 +138,7 @@ public class ID3 {
 				throw new NoID3TagException();
 			}
 		}
-		return genre.byteValue();
+		return Byte.toUnsignedInt(genre.byteValue());
 	}
 
 	/**
@@ -331,6 +333,52 @@ public class ID3 {
 
 		in.close();
 	}
+	
+	   public void removeTag() throws IOException {
+	        // get access to file
+	        if (checkForTag()) {
+	            // tag exists, we need to truncate the file
+	            File temp = new File(mp3_file.getParentFile(), ".id3.tmp");
+	            OutputStream out = null;
+	            InputStream in = null;
+	            long size = mp3_file.length();
+	            try {
+	                in = new FileInputStream(mp3_file);
+	                out = new FileOutputStream(temp);
+	                byte buf[] = new byte[8192];
+	                int c;
+	                // size is the bytes remained to be read
+	                while ((c = in.read(buf)) > 0 && size > 128) {  // truncate the last 128 bytes 
+	                    if (c+128 > size) {
+	                        c = (int)size - 128;
+	                    }
+	                    out.write(buf, 0, c);
+	                    size -= c;
+	                }
+	                in.close();
+	                if (!mp3_file.delete()) {
+	                    System.err.println("Cannot delete mp3 file: "+mp3_file);
+	                }
+	                out.close();
+	                if (!temp.renameTo(mp3_file)) {
+	                    System.err.println("Cannot rename "+temp+" to "+mp3_file);
+	                    temp = null;        // prevent it from being deleted
+	                }
+	            } finally {
+	                try {
+	                    if (in != null) in.close();
+	                } catch (Exception e) {
+	                }
+	                try {
+	                    if (out != null) out.close();
+	                } catch (Exception e) {
+	                }
+	                if (temp != null)
+	                    temp.delete();
+	            }
+	        }
+	    }
+
 
 	private File mp3_file = null; // file to access
 

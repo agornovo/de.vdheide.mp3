@@ -1,25 +1,20 @@
-// ID3v2.java
-//
-//$Id$
-//
 //de.vdheide.mp3: Access MP3 properties, ID3 and ID3v2 tags
 //Copyright (C) 1999-2004 Jens Vonderheide <jens@vdheide.de>
-//
-//This library is free software; you can redistribute it and/or
-//modify it under the terms of the GNU Library General Public
-//License as published by the Free Software Foundation; either
-//version 2 of the License, or (at your option) any later version.
-//
-//This library is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-//Library General Public License for more details.
-//
-//You should have received a copy of the GNU Library General Public
-//License along with this library; if not, write to the
-//Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-//Boston, MA  02111-1307, USA.
 
+/*
+ * This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 package de.vdheide.mp3;
 
 import java.io.ByteArrayInputStream;
@@ -38,17 +33,19 @@ import java.util.Vector;
  * <p>
  * Notes:
  * <ol>
- * <li>There are two ways of detecting the size of padding used: <ol type="a">
+ * <li>There are two ways of detecting the size of padding used: {@literal<ol type="a">}
  * <li>The "Size of padding" field in the extended header
- * <li>Detecting all frames and substracting the tag's actual length from its'
+ * <li>Detecting all frames and subtracting the tag's actual length from its'
  * length in the header.
  * </ol>
  * Method a) is used in preference, so if a wrong padding size is stated in the
  * extended header, all bad things may happen.
+ * <ul>
  * <li>Although the ID3v2 informal standard does not state it, this class will
  * only detect an ID3v2 tag if is starts at the first byte of a file.
  * <li>There is no direct access to the header and extended header. Both are
  * read, created and written internally.
+ * </ul>
  */
 public class ID3v2 {
 
@@ -213,6 +210,20 @@ public class ID3v2 {
 			is_changed = true;
 			this.use_padding = use_padding;
 		}
+	}
+
+	public void touch () {
+		is_changed = true;
+	}
+
+	/*
+	 * Clear all information in the tag.
+	 */
+	public void clear() {
+		header = null;
+		frames = null;
+		is_changed = true;
+		extended_header = null;
 	}
 
 	/**
@@ -793,4 +804,19 @@ public class ID3v2 {
 
 		return out.toByteArray();
 	}
+	
+	public int getVersion() {
+		if (header != null) {
+			return header.version;
+		} else
+			return VERSION;
+	}
+	
+	public int getRevision() {
+		if (header != null) {
+			return header.revision;
+		} else 
+			return REVISION;
+	}
+	
 }

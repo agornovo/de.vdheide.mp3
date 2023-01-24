@@ -1,20 +1,119 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.vdheide</groupId>
-    <artifactId>mp3-tagging-utility</artifactId>
-    <version>0.4.1-SNAPSHOT</version>
+    <groupId>com.github.agornovo</groupId>
+    <artifactId>mp3-tagging</artifactId>
+    <version>0.5.1-SNAPSHOT</version>
     <name>MP3 tagging library</name>
-    <description>Jens Vonderheide's LGPL MP3 tag reader/writer library</description>
+    <description>Jens Vonderheide's MP3 tag reader/writer library</description>
+    <url>https://github.com/agornovo/de.vdheide.mp3</url>
+    <licenses>
+        <license>
+            <name>GNU General Public License, Version 3</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+        </license>
+    </licenses>
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+    <scm>
+        <connection>scm:git:git@github.com:agornovo/mp3-tagging.git</connection>
+        <developerConnection>scm:git:git@github.com:agornovo/mp3-tagging.git</developerConnection>
+        <url>https://github.com/agornovo/mp3-tagging/tree/main</url>
+        <tag>HEAD</tag>
+    </scm>
+    <developers>
+        <developer>
+            <name>Jens Vonderheide</name>
+            <email>jens@vdheide.de</email>
+            <organization>Jens Vonderheide</organization>
+            <organizationUrl>https://vdheide.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>David Mihalcik</name>
+            <email>krakatoa@gmail.com</email>
+            <organization>David Mihalcik</organization>
+            <organizationUrl>https://github.com/dmihalcik</organizationUrl>
+        </developer>
+        <developer>
+            <name>Arkadiy Gornovoy</name>
+            <email>gornovoy@yahoo.com</email>
+            <organization>Arkadiy Gornovoy</organization>
+            <organizationUrl>https://github.com/agornovo</organizationUrl>
+        </developer>
+    </developers>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/agornovo/public</url>
+        </repository>
+    </distributionManagement>
 </project>

@@ -1,3 +1,9 @@
+Version 0.5
+
+MOD: ID3 v2 tag enhancements
+MOD: ID3 v1 tag enhancements
+MOD: Convert to use maven and Java 17
+
 Version 0.4
 
 FIX: Changed Eclipse project settings to use the JUnit library instead of JUNIT_HOME
